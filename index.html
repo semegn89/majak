@@ -18,6 +18,7 @@ header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(1
 .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
 .logo{display:flex;align-items:center;gap:12px}
 .logo .mark{width:34px;height:34px;border-radius:8px;background:#222;display:grid;place-items:center;font-weight:800;color:#fff}
+.logo-img{width:34px;height:34px;object-fit:contain;border-radius:8px}
 .nav-links{display:flex;gap:16px;align-items:center}
 .nav-links a{padding:8px 10px;border-radius:10px;color:#cbd5e1}
 .nav-links a:hover{background:rgba(255,255,255,.08);color:#fff}
@@ -397,7 +398,7 @@ table.info tr:last-child td{border-bottom:none}
 </div></div>
 <header>
   <div class="container nav">
-    <div class="logo"><div class="mark">MV</div><strong>Maják Východ</strong></div>
+    <div class="logo"><img src="img/logo1.png" alt="Maják Východ" class="logo-img"><strong>Maják Východ</strong></div>
     <button id="burger" class="burger" aria-label="Menu">☰</button>
     <nav id="navLinks" class="nav-links" aria-label="Main navigation">
               <a href="#home">Home</a>
@@ -24883,10 +24884,11 @@ table.info tr:last-child td{border-bottom:none}
       </div>
       <div class="card padded">
         <div class="title" data-cz="E-mail" data-en="Email">E-mail</div>
-        <div class="small"><a href="mailto:ordermajakvychod@gmail.com">ordermajakvychod@gmail.com</a></div>
+        <div class="small"><a href="mailto:info@mv.cz">info@mv.cz</a></div>
       </div>
       <div class="card padded">
-
+        <div class="title" data-cz="Telefon" data-en="Phone">Telefon</div>
+        <div class="small"><a href="tel:+420000000000">+420 000 000 000</a></div>
       </div>
     </div>
   </div>
@@ -25546,7 +25548,161 @@ document.getElementById('burger').addEventListener('click',()=>{
   });
 })();
 
-// Carousel JavaScript completely removed
+// Update prices to realistic values
+(function updatePrices() {
+  const products = document.querySelectorAll('.prod');
+  
+  products.forEach(product => {
+    const category = product.getAttribute('data-cat');
+    const priceElement = product.querySelector('.price');
+    
+    if (category && priceElement) {
+      let newPrice = 0;
+      
+      // Realistic price ranges based on category
+      if (category.includes('Pneumatiky') || category.includes('Tires')) {
+        // Tires: €80-300 per tire
+        newPrice = Math.floor(Math.random() * (300 - 80 + 1)) + 80;
+      } else if (category.includes('Brzdy') || category.includes('Brakes')) {
+        // Brakes: €25-150 per part
+        newPrice = Math.floor(Math.random() * (150 - 25 + 1)) + 25;
+      } else if (category.includes('Podvozek') || category.includes('Suspension')) {
+        // Suspension: €45-200 per part
+        newPrice = Math.floor(Math.random() * (200 - 45 + 1)) + 45;
+      } else if (category.includes('Oleje') || category.includes('Oils')) {
+        // Oils: €8-50 per liter/bottle
+        newPrice = Math.floor(Math.random() * (50 - 8 + 1)) + 8;
+      } else if (category.includes('Spotřební') || category.includes('Consumables')) {
+        // Consumables: €3-25 per item
+        newPrice = Math.floor(Math.random() * (25 - 3 + 1)) + 3;
+      }
+      
+      // Update both data-price attribute and displayed price
+      if (newPrice > 0) {
+        product.setAttribute('data-price', newPrice);
+        priceElement.textContent = `€${newPrice}`;
+      }
+    }
+  });
+})();
+
+// Generate realistic catalog numbers
+(function generateRealisticSKUs() {
+  const products = document.querySelectorAll('.prod');
+  
+  // Realistic SKU patterns for different categories
+  const skuPatterns = {
+    'Pneumatiky': [
+      'MIC-205/55R16-91V',
+      'CON-225/45R17-91W',
+      'BRID-195/65R15-91H',
+      'GOOD-215/55R17-98V',
+      'PIRE-225/40R18-92Y',
+      'CONT-205/60R16-92H',
+      'MIC-225/50R17-94V',
+      'BRID-195/55R16-87H',
+      'GOOD-235/45R17-97W',
+      'PIRE-205/55R16-91V'
+    ],
+    'Brzdy': [
+      'BREM-09.8962.10',
+      'BOSCH-0986424567',
+      'ATE-24.0136-0101.2',
+      'FER-DF4154',
+      'BREM-09.8962.11',
+      'BOSCH-0986424568',
+      'ATE-24.0136-0102.2',
+      'FER-DF4155',
+      'BREM-09.8962.12',
+      'BOSCH-0986424569'
+    ],
+    'Podvozek': [
+      'SACHS-314 123',
+      'BILSTEIN-19-123456',
+      'KYB-334123',
+      'MONROE-12345',
+      'SACHS-314 124',
+      'BILSTEIN-19-123457',
+      'KYB-334124',
+      'MONROE-12346',
+      'SACHS-314 125',
+      'BILSTEIN-19-123458'
+    ],
+    'Oleje': [
+      'CAST-5W30-C3',
+      'MOBIL-5W30-FE',
+      'SHELL-5W30-C3',
+      'TOTAL-5W30-C3',
+      'CAST-5W40-C3',
+      'MOBIL-5W40-C3',
+      'SHELL-5W40-C3',
+      'TOTAL-5W40-C3',
+      'CAST-0W20-C5',
+      'MOBIL-0W20-C5'
+    ],
+    'Spotřební': [
+      'BOSCH-0986424567',
+      'MANN-C25114',
+      'MAHLE-LX1234',
+      'FRAM-PH1234',
+      'BOSCH-0986424568',
+      'MANN-C25115',
+      'MAHLE-LX1235',
+      'FRAM-PH1235',
+      'BOSCH-0986424569',
+      'MANN-C25116'
+    ]
+  };
+  
+  let categoryCounters = {
+    'Pneumatiky': 0,
+    'Brzdy': 0,
+    'Podvozek': 0,
+    'Oleje': 0,
+    'Spotřební': 0
+  };
+  
+  products.forEach(product => {
+    const category = product.getAttribute('data-cat');
+    const skuElement = product.querySelector('.sku');
+    
+    if (category && skuElement) {
+      let categoryKey = '';
+      
+      // Determine category key
+      if (category.includes('Pneumatiky') || category.includes('Tires')) {
+        categoryKey = 'Pneumatiky';
+      } else if (category.includes('Brzdy') || category.includes('Brakes')) {
+        categoryKey = 'Brzdy';
+      } else if (category.includes('Podvozek') || category.includes('Suspension')) {
+        categoryKey = 'Podvozek';
+      } else if (category.includes('Oleje') || category.includes('Oils')) {
+        categoryKey = 'Oleje';
+      } else if (category.includes('Spotřební') || category.includes('Consumables')) {
+        categoryKey = 'Spotřební';
+      }
+      
+      if (categoryKey && skuPatterns[categoryKey]) {
+        const counter = categoryCounters[categoryKey];
+        const skuPattern = skuPatterns[categoryKey][counter % skuPatterns[categoryKey].length];
+        
+        // Update data-sku attribute
+        product.setAttribute('data-sku', skuPattern);
+        
+        // Update displayed SKU
+        const categoryText = categoryKey === 'Pneumatiky' ? 'Pneumatiky • Tires' :
+                           categoryKey === 'Brzdy' ? 'Brzdy • Brakes' :
+                           categoryKey === 'Podvozek' ? 'Podvozek • Suspension' :
+                           categoryKey === 'Oleje' ? 'Oleje • Oils' :
+                           'Spotřební díly • Consumables';
+        
+        skuElement.textContent = `${skuPattern} · ${categoryText}`;
+        
+        categoryCounters[categoryKey]++;
+      }
+    }
+  });
+})();
 
 document.getElementById('year').textContent = _year;
 (document.getElementById('langToggle')?document.getElementById('langToggle').querySelector('button.active'):null)?.click();
